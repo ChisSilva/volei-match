@@ -4,7 +4,7 @@ import android.app.Application
 import com.example.voleimatch.data.AppDatabase
 import com.example.voleimatch.data.JogadorRepository
 
-class VoleiApp : Application {
+class VoleiApp : Application() {
 
     private val database by lazy { AppDatabase.getInstance(this) }
 
