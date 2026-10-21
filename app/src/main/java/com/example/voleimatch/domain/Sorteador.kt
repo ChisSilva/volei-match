@@ -36,7 +36,7 @@ object Sorteador {
         ordemDeEscolha.forEachIndexed { indice, jogador ->
             val rodada = indice / quantidadeTimes
             val posicao = indice % quantidadeTimes
-            val time = if (rodada % 2 == 0) posicao else quantidadeTimes -1
+            val time = if (rodada % 2 == 0) posicao else quantidadeTimes - 1 - posicao
             listas[time].add(jogador)
         }
 
