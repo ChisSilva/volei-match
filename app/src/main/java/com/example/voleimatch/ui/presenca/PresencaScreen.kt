@@ -116,7 +116,7 @@ fun PresencaScreen(
 private fun ConfiguracaoCard(
     estado: PresencaUiState,
     onTimesChange: (Int) -> Unit,
-    OnJogadoresPorTimeChange: (Int) -> Unit
+    onJogadoresPorTimeChange: (Int) -> Unit
 ) {
     Card(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
         Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
