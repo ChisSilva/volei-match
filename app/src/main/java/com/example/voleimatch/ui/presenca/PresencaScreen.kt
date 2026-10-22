@@ -41,6 +41,7 @@ import com.example.voleimatch.util.JOGADORES_POR_TIME_MAXIMO
 import com.example.voleimatch.util.JOGADORES_POR_TIME_MINIMO
 import com.example.voleimatch.util.TIMES_MAXIMO
 import com.example.voleimatch.util.TIMES_MINIMO
+import androidx.compose.foundation.layout.height
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,31 +62,40 @@ fun PresencaScreen(
                 }
             )
         }
-    ) {
-        padding ->
-        Column(modifier = Modifier.padding(padding)) {
-            ConfiguracaoCard(
-                estado = estado,
-                onTimesChange = viewModel::definirQuantidadeTimes,
-                onJogadoresPorTimeChange = viewModel::definirJogadoresPorTime
-            )
+    ) { padding ->
+        LazyColumn(
+            modifier = Modifier
+                .padding(padding)
+                .fillMaxSize()
+        ) {
+            item {
+                ConfiguracaoCard(
+                    estado = estado,
+                    onTimesChange = viewModel::definirQuantidadeTimes,
+                    onJogadoresPorTimeChange = viewModel::definirJogadoresPorTime
+                )
+            }
 
-            ResumoPresenca(estado)
+            item { ResumoPresenca(estado) }
 
-            Row(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                OutlinedButton(onClick = viewModel::marcarTodos) { Text("Marcar Todos") }
-                OutlinedButton(onClick = viewModel::desmarcarTodos) { Text("Desmarcar todos") }
+            item {
+                Row(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    OutlinedButton(onClick = viewModel::marcarTodos) { Text("Marcar todos") }
+                    OutlinedButton(onClick = viewModel::desmarcarTodos) { Text("Desmarcar todos") }
+                }
             }
 
             if (estado.jogadores.isEmpty()) {
-                Box(
-                    modifier = Modifier.fillMaxSize().padding(24.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                item {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         Text(
                             text = "Nenhum jogador cadastrado ainda.",
                             textAlign = TextAlign.Center
@@ -93,19 +103,19 @@ fun PresencaScreen(
                         Button(
                             onClick = onGerenciarJogadores,
                             modifier = Modifier.padding(top = 12.dp)
-                        ) { Text("Cadastrar Jogadores") }
+                        ) { Text("Cadastrar jogadores") }
                     }
                 }
             } else {
-                LazyColumn(modifier = Modifier.padding(top = 8.dp)) {
-                    items(estado.jogadores, key = { it.id }) { jogador ->
-                        PresencaItem(
-                            jogador = jogador,
-                            presente = jogador.id in estado.presentesIds,
-                            onAlternar = { viewModel.alternarPresenca(jogador.id) }
-                        )
-                        HorizontalDivider()
-                    }
+                item { Spacer(Modifier.height(8.dp)) }
+
+                items(estado.jogadores, key = { it.id }) { jogador ->
+                    PresencaItem(
+                        jogador = jogador,
+                        presente = jogador.id in estado.presentesIds,
+                        onAlternar = { viewModel.alternarPresenca(jogador.id) }
+                    )
+                    HorizontalDivider()
                 }
             }
         }
