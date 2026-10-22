@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.voleimatch.ui.jogadores.JogadoresScreen
 import com.example.voleimatch.ui.theme.VoleiMatchTheme
+import com.example.voleimatch.ui.navigation.AppNavHost
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             VoleiMatchTheme {
-                JogadoresScreen()
+                AppNavHost()
             }
         }
     }
