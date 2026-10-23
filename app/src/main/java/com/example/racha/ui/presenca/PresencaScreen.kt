@@ -41,11 +41,13 @@ import com.example.racha.util.JOGADORES_POR_TIME_MINIMO
 import com.example.racha.util.TIMES_MAXIMO
 import com.example.racha.util.TIMES_MINIMO
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PresencaScreen(
     onGerenciarJogadores: () -> Unit,
+    onSortear: () -> Unit,
     viewModel: PresencaViewModel = viewModel(factory = PresencaViewModel.Factory)
 ) {
     val estado by viewModel.uiState.collectAsStateWithLifecycle()
@@ -60,6 +62,16 @@ fun PresencaScreen(
                     }
                 }
             )
+        },
+        bottomBar = {
+            Button(
+                onClick = { if (viewModel.sortear()) onSortear() },
+                enabled = estado.podeSortear,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding()
+                    .padding(16.dp)
+            ) { Text("Sortear times") }
         }
     ) { padding ->
         LazyColumn(

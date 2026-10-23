@@ -23,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "voleimatch.db"
+                    "racha.db"
                 ).build().also { INSTANCE = it }
             }
     }
