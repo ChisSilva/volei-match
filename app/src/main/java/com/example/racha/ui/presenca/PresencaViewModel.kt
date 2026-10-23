@@ -8,6 +8,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.racha.RachaApp
 import com.example.racha.data.JogadorRepository
 import com.example.racha.domain.Jogador
+import com.example.racha.domain.Sorteador
+import com.example.racha.domain.Sorteio
 import com.example.racha.util.JOGADORES_POR_TIME_MAXIMO
 import com.example.racha.util.JOGADORES_POR_TIME_MINIMO
 import com.example.racha.util.JOGADORES_POR_TIME_PADRAO
@@ -33,7 +35,7 @@ data class PresencaUiState(
     val vagas: Int
         get() = quantidadeTimes * jogadoresPorTime
 
-    val  faltam: Int
+    val faltam: Int
         get() = (vagas - totalPresentes).coerceAtLeast(0)
 
     val reservas: Int
@@ -44,7 +46,8 @@ data class PresencaUiState(
 }
 
 class PresencaViewModel(
-    repository: JogadorRepository
+    repository: JogadorRepository,
+    private val sorteioAtual: MutableStateFlow<Sorteio?>
 ) : ViewModel() {
 
     private val presentesIds = MutableStateFlow<Set<Long>>(emptySet())
@@ -55,7 +58,7 @@ class PresencaViewModel(
         repository.jogadores,
         presentesIds,
         quantidadeTimes,
-        jogadoresPorTime,
+        jogadoresPorTime
     ) { jogadores, presentes, times, porTime ->
         PresencaUiState(jogadores, presentes, times, porTime)
     }.stateIn(
@@ -81,16 +84,35 @@ class PresencaViewModel(
     }
 
     fun definirJogadoresPorTime(valor: Int) {
-        jogadoresPorTime.value = valor.coerceIn(JOGADORES_POR_TIME_MINIMO, JOGADORES_POR_TIME_MAXIMO)
+        jogadoresPorTime.value =
+            valor.coerceIn(JOGADORES_POR_TIME_MINIMO, JOGADORES_POR_TIME_MAXIMO)
+    }
+
+    fun sortear(): Boolean {
+        val estado = uiState.value
+        if (!estado.podeSortear) return false
+
+        val presentes = estado.jogadores.filter { it.id in estado.presentesIds }
+        val resultado = Sorteador.sortear(
+            presentes = presentes,
+            quantidadeTimes = estado.quantidadeTimes,
+            jogadoresPorTime = estado.jogadoresPorTime
+        )
+        sorteioAtual.value = Sorteio(
+            presentes = presentes,
+            quantidadeTimes = estado.quantidadeTimes,
+            jogadoresPorTime = estado.jogadoresPorTime,
+            resultado = resultado
+        )
+        return true
     }
 
     companion object {
         val Factory = viewModelFactory {
             initializer {
                 val app = this[APPLICATION_KEY] as RachaApp
-                PresencaViewModel(app.jogadorRepository)
+                PresencaViewModel(app.jogadorRepository, app.sorteioAtual)
             }
         }
     }
 }
-

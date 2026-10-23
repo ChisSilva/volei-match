@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.voleimatch"
+        applicationId = "com.example.racha"
         minSdk = 24
         targetSdk = 37
         versionCode = 1
