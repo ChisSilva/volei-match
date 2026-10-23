@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "VoleiMatch"
+rootProject.name = "Racha"
 include(":app")
  
