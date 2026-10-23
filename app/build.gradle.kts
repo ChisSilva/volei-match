@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.voleimatch"
+    namespace = "com.example.racha"
     compileSdk {
         version = release(37)
     }
