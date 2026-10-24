@@ -1,5 +1,6 @@
 package com.example.racha.ui.jogadores
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -45,6 +46,7 @@ import com.example.racha.util.NIVEL_PADRAO
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JogadoresScreen(
+    onVoltar: () -> Unit,
     viewModel: JogadoresViewModel = viewModel(factory = JogadoresViewModel.Factory)
 ) {
     val jogadores by viewModel.jogadores.collectAsStateWithLifecycle()
@@ -58,6 +60,11 @@ fun JogadoresScreen(
         topBar = {
             TopAppBar(
                 title = { Text("Jogadores") },
+                navigationIcon = {
+                    IconButton(onClick = onVoltar) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
+                    }
+                },
                 actions = {
                     Box {
                         IconButton(onClick = { menuOrdenacaoAberto = true }) {
