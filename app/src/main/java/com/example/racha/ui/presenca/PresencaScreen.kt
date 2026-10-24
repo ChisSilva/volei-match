@@ -1,5 +1,6 @@
 package com.example.racha.ui.presenca
 
+import androidx.compose.material3.TextButton
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -48,6 +49,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 fun PresencaScreen(
     onGerenciarJogadores: () -> Unit,
     onSortear: () -> Unit,
+    onAbrirPlacar: () -> Unit,
     viewModel: PresencaViewModel = viewModel(factory = PresencaViewModel.Factory)
 ) {
     val estado by viewModel.uiState.collectAsStateWithLifecycle()
@@ -57,6 +59,7 @@ fun PresencaScreen(
             TopAppBar(
                 title = { Text("Quem vai jogar?") },
                 actions = {
+                    TextButton(onClick = onAbrirPlacar) { Text("Placar") }
                     IconButton(onClick = onGerenciarJogadores) {
                         Icon(Icons.Default.Person, contentDescription = "Gerenciar jogadores")
                     }

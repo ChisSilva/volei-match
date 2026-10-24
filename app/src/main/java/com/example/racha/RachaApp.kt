@@ -5,6 +5,7 @@ import com.example.racha.data.AppDatabase
 import com.example.racha.data.JogadorRepository
 import com.example.racha.domain.Sorteio
 import kotlinx.coroutines.flow.MutableStateFlow
+import com.example.racha.domain.Placar
 
 class RachaApp : Application() {
 
@@ -13,4 +14,6 @@ class RachaApp : Application() {
     val jogadorRepository by lazy { JogadorRepository(database.jogadorDao()) }
 
     val sorteioAtual = MutableStateFlow<Sorteio?>(null)
+
+    val placarAtual = MutableStateFlow(Placar())
 }
