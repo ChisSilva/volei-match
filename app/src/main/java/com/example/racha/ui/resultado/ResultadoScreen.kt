@@ -1,6 +1,6 @@
 package com.example.racha.ui.resultado
 
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.FilledTonalButton
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -67,39 +67,46 @@ fun ResultadoScreen(
                     IconButton(onClick = onVoltar) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
                     }
-                },
-                actions = {
-                    TextButton(onClick = onAbrirPlacar) { Text("Placar") }
                 }
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
             if (resultado != null) {
-                Row(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .navigationBarsPadding()
                         .padding(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    OutlinedButton(
-                        onClick = viewModel::refazer,
-                        modifier = Modifier.weight(1f)
-                    ) { Text("Refazer sorteio") }
+                    FilledTonalButton(
+                        onClick = onAbrirPlacar,
+                        modifier = Modifier.fillMaxWidth()
+                    ) { Text("Iniciar placar") }
 
-                    Button(
-                        onClick = {
-                            val clipboard =
-                                context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                            val texto = FormatadorWhatsApp.formatar(resultado)
-                            clipboard.setPrimaryClip(ClipData.newPlainText("Times", texto))
-                            scope.launch {
-                                snackbarHostState.showSnackbar("Copiado! Agora é só colar no WhatsApp.")
-                            }
-                        },
-                        modifier = Modifier.weight(1f)
-                    ) { Text("Copiar para WhatsApp") }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        OutlinedButton(
+                            onClick = viewModel::refazer,
+                            modifier = Modifier.weight(1f)
+                        ) { Text("Refazer sorteio") }
+
+                        Button(
+                            onClick = {
+                                val clipboard =
+                                    context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                val texto = FormatadorWhatsApp.formatar(resultado)
+                                clipboard.setPrimaryClip(ClipData.newPlainText("Times", texto))
+                                scope.launch {
+                                    snackbarHostState.showSnackbar("Copiado! Agora é só colar no WhatsApp.")
+                                }
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) { Text("Copiar para WhatsApp") }
+                    }
                 }
             }
         }
