@@ -1,6 +1,8 @@
 package com.example.racha.ui.presenca
 
-import androidx.compose.material3.TextButton
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.res.painterResource
+import com.example.racha.R
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -59,9 +61,18 @@ fun PresencaScreen(
             TopAppBar(
                 title = { Text("Quem vai jogar?") },
                 actions = {
-                    TextButton(onClick = onAbrirPlacar) { Text("Placar") }
+                    IconButton(onClick = onAbrirPlacar) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_placar),
+                            contentDescription = "Abrir placar",
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
                     IconButton(onClick = onGerenciarJogadores) {
-                        Icon(Icons.Default.Person, contentDescription = "Gerenciar jogadores")
+                        Icon(Icons.Default.Person,
+                            contentDescription = "Gerenciar jogadores",
+                            modifier = Modifier.size(28.dp)
+                        )
                     }
                 }
             )

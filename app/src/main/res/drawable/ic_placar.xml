@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Moldura externa -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FF000000"
+        android:strokeWidth="1.4"
+        android:pathData="M3.5,5.5 H20.5 A2,2 0 0 1 22.5,7.5 V16.5 A2,2 0 0 1 20.5,18.5 H3.5 A2,2 0 0 1 1.5,16.5 V7.5 A2,2 0 0 1 3.5,5.5 Z" />
+
+    <!-- Os dois visores, com os números "2" e "1" recortados -->
+    <path
+        android:fillColor="#FF000000"
+        android:fillType="evenOdd"
+        android:pathData="M5,8 H9.5 A1,1 0 0 1 10.5,9 V15 A1,1 0 0 1 9.5,16 H5 A1,1 0 0 1 4,15 V9 A1,1 0 0 1 5,8 Z
+            M5.55,9.5 H8.95 V12.5 H6.55 V13.5 H8.95 V14.5 H5.55 V11.5 H7.95 V10.5 H5.55 Z
+            M14.5,8 H19 A1,1 0 0 1 20,9 V15 A1,1 0 0 1 19,16 H14.5 A1,1 0 0 1 13.5,15 V9 A1,1 0 0 1 14.5,8 Z
+            M15.75,9.5 H17.75 V14.5 H16.75 V10.5 H15.75 Z" />
+
+    <!-- Os dois pontos no meio -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M11.3,10.5 A0.7,0.7 0 1 0 12.7,10.5 A0.7,0.7 0 1 0 11.3,10.5 Z
+            M11.3,13.5 A0.7,0.7 0 1 0 12.7,13.5 A0.7,0.7 0 1 0 11.3,13.5 Z" />
+</vector>
