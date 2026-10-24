@@ -32,7 +32,10 @@ fun AppNavHost() {
             JogadoresScreen()
         }
         composable(Rotas.RESULTADO) {
-            ResultadoScreen(onVoltar = { navController.popBackStack() })
+            ResultadoScreen(
+                onVoltar = { navController.popBackStack() },
+                onAbrirPlacar = { navController.navigate(Rotas.PLACAR) }
+            )
         }
         composable(Rotas.PLACAR) {
             PlacarScreen(onVoltar = { navController.popBackStack() })
