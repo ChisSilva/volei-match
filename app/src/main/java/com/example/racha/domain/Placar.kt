@@ -4,13 +4,13 @@ import com.example.racha.util.PLACAR_MAXIMO
 
 enum class Lado { ESQUERDA, DIREITA }
 
-data class Placar (
+data class Placar(
     val pontosEsquerda: Int = 0,
     val pontosDireita: Int = 0,
     val faltasEsquerda: Int = 0,
     val faltasDireita: Int = 0
 ) {
-    fun alterarPontos(lado: Lado. delta: Int): Placar = when (lado) {
+    fun alterarPontos(lado: Lado, delta: Int): Placar = when (lado) {
         Lado.ESQUERDA -> copy(pontosEsquerda = limitar(pontosEsquerda + delta))
         Lado.DIREITA -> copy(pontosDireita = limitar(pontosDireita + delta))
     }
