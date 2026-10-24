@@ -1,5 +1,6 @@
 package com.example.racha.ui.resultado
 
+import androidx.compose.material3.TextButton
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -48,6 +49,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ResultadoScreen(
     onVoltar: () -> Unit,
+    onAbrirPlacar: () -> Unit,
     viewModel: ResultadoViewModel = viewModel(factory = ResultadoViewModel.Factory)
 ) {
     val sorteio by viewModel.sorteio.collectAsStateWithLifecycle()
@@ -65,6 +67,9 @@ fun ResultadoScreen(
                     IconButton(onClick = onVoltar) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
                     }
+                },
+                actions = {
+                    TextButton(onClick = onAbrirPlacar) { Text("Placar") }
                 }
             )
         },

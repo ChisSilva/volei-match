@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.racha.ui.jogadores.JogadoresScreen
+import com.example.racha.ui.placar.PlacarScreen
 import com.example.racha.ui.presenca.PresencaScreen
 import com.example.racha.ui.resultado.ResultadoScreen
 
@@ -12,6 +13,7 @@ object Rotas {
     const val PRESENCA = "presenca"
     const val JOGADORES = "jogadores"
     const val RESULTADO = "resultado"
+    const val PLACAR = "placar"
 }
 
 @Composable
@@ -22,14 +24,21 @@ fun AppNavHost() {
         composable(Rotas.PRESENCA) {
             PresencaScreen(
                 onGerenciarJogadores = { navController.navigate(Rotas.JOGADORES) },
-                onSortear = { navController.navigate(Rotas.RESULTADO) }
+                onSortear = { navController.navigate(Rotas.RESULTADO) },
+                onAbrirPlacar = { navController.navigate(Rotas.PLACAR) }
             )
         }
         composable(Rotas.JOGADORES) {
             JogadoresScreen()
         }
         composable(Rotas.RESULTADO) {
-            ResultadoScreen(onVoltar = { navController.popBackStack() })
+            ResultadoScreen(
+                onVoltar = { navController.popBackStack() },
+                onAbrirPlacar = { navController.navigate(Rotas.PLACAR) }
+            )
+        }
+        composable(Rotas.PLACAR) {
+            PlacarScreen(onVoltar = { navController.popBackStack() })
         }
     }
 }
