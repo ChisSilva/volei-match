@@ -29,7 +29,7 @@ fun AppNavHost() {
             )
         }
         composable(Rotas.JOGADORES) {
-            JogadoresScreen()
+            JogadoresScreen(onVoltar = { navController.popBackStack() })
         }
         composable(Rotas.RESULTADO) {
             ResultadoScreen(

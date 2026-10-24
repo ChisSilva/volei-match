@@ -1,4 +1,12 @@
 package com.example.racha.ui.jogadores
+
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.ui.res.painterResource
+import com.example.racha.R
+import com.example.racha.domain.Ordenacao
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -38,16 +46,55 @@ import com.example.racha.util.NIVEL_PADRAO
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JogadoresScreen(
+    onVoltar: () -> Unit,
     viewModel: JogadoresViewModel = viewModel(factory = JogadoresViewModel.Factory)
 ) {
     val jogadores by viewModel.jogadores.collectAsStateWithLifecycle()
+    val ordenacao by viewModel.ordenacao.collectAsStateWithLifecycle()
 
     var formulario by remember { mutableStateOf<Jogador?>(null) }
     var jogadorParaExcluir by remember { mutableStateOf<Jogador?>(null) }
+    var menuOrdenacaoAberto by remember { mutableStateOf(false) }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Jogadores") }) },
-        floatingActionButton = {
+        topBar = {
+            TopAppBar(
+                title = { Text("Jogadores") },
+                navigationIcon = {
+                    IconButton(onClick = onVoltar) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
+                    }
+                },
+                actions = {
+                    Box {
+                        IconButton(onClick = { menuOrdenacaoAberto = true }) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_ordenar),
+                                contentDescription = "Ordenar lista"
+                            )
+                        }
+                        DropdownMenu(
+                            expanded = menuOrdenacaoAberto,
+                            onDismissRequest = { menuOrdenacaoAberto = false }
+                        ) {
+                            Ordenacao.entries.forEach { opcao ->
+                                DropdownMenuItem(
+                                    text = { Text(opcao.rotulo) },
+                                    onClick = {
+                                        viewModel.definirOrdenacao(opcao)
+                                        menuOrdenacaoAberto = false
+                                    },
+                                    trailingIcon = if (opcao == ordenacao) {
+                                        { Icon(Icons.Default.Check, contentDescription = "Selecionada") }
+                                    } else null
+                                )
+                            }
+                        }
+                    }
+                }
+            )
+        },
+            floatingActionButton = {
             FloatingActionButton(
                 onClick = { formulario = Jogador(nome = "", nivel = NIVEL_PADRAO) }
             ) {
