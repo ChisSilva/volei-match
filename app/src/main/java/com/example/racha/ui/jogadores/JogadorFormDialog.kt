@@ -1,5 +1,7 @@
 package com.example.racha.ui.jogadores
 
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -45,7 +47,10 @@ fun JogadorFormDialog(
                     value = nome,
                     onValueChange = { nome = it },
                     label = { Text("Nome") },
-                    singleLine = true
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words
+                    )
                 )
                 Spacer(Modifier.height(16.dp))
                 Text("Nível")
