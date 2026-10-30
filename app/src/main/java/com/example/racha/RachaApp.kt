@@ -14,7 +14,9 @@ class RachaApp : Application() {
 
     val jogadorRepository by lazy {
         JogadorRepository(database.jogadorDao())
-        val preferencias by lazy { PreferenciasApp(this) }
+    }
+    val preferencias by lazy {
+        PreferenciasApp(this)
     }
 
     val sorteioAtual = MutableStateFlow<Sorteio?>(null)
